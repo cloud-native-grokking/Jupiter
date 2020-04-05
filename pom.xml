@@ -377,7 +377,9 @@
                     </pluginArtifact>
 
                     <protoSourceRoot>${basedir}/src/main/proto</protoSourceRoot>
+                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
                     <attachProtoSources>false</attachProtoSources>
+                    <clearOutputDirectory>false</clearOutputDirectory>
                 </configuration>
                 <executions>
                     <execution>

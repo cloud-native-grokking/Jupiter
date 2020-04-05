@@ -20,7 +20,6 @@ import java.util.Optional;
         "grpc.enabled=false",
         "grpc.inProcessServerName='grpcTestServer'"
 })
-@DataMongoTest
 public class JupiterGrpcControllerTest extends GrpcServerTestBase {
 
     @Test

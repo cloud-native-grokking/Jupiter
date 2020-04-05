@@ -1,5 +1,6 @@
 package com.cloudnative.grokking.jupiter;
 
+import de.flapdoodle.embed.mongo.MongodStarter;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,10 +8,12 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfigurat
 import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.EmbeddedDataSourceConfiguration;
 import org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration;
 import org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
@@ -23,9 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
                 JmsAutoConfiguration.class,
                 HibernateJpaAutoConfiguration.class,
                 DataSourceAutoConfiguration.class,
+                EmbeddedMongoAutoConfiguration.class,
                 MongoAutoConfiguration.class,
                 MongoDataAutoConfiguration.class,
-                MongoRepositoriesAutoConfiguration.class
+                MongoRepositoriesAutoConfiguration.class,
+
         }
 )
 @ComponentScan(
