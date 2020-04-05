@@ -1,0 +1,15 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.cloudnative.grokking.jupiter.api";
+package sample.api;
+
+service JupiterGrpcService {
+    rpc ping (PingRequest) returns (PingResponse);
+}
+
+message PingRequest {
+    string request = 1;
+}
+message PingResponse {
+    string response = 1;
+}
