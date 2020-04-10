@@ -1,39 +1,21 @@
-# This file contains all common configurations that will be used in all environments
-# Any environment-specific configuration must be defined in application-[environment].yml
 server:
   port: 8069
 grpc:
   port: 6996
-management:
-  endpoint:
-    metrics:
-      enabled: true
-    health:
-      show-details: ALWAYS
-    prometheus:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: ["health", "info", "prometheus"]
-  metrics:
-    export:
-      prometheus:
-        enabled: true
 spring:
-  application:
-    name: cloud-navtive-grokking-jupiter
   data:
     mongodb:
       authentication-database: admin
       database: jupiter
       port: 27017
-      host: localhost
+      host: mongo-jupiter
+      username: root
+      password: root
   kafka:
     listener:
       concurrency: 4
     consumer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: kafka-jupiter:9092
       group-id: default
       auto-offset-reset: earliest
       enable-auto-commit: true

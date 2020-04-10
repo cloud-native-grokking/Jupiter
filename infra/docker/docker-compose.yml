@@ -2,26 +2,41 @@ version: '3'
 services:
   zookeeper:
     image: wurstmeister/zookeeper
-  kafka:
+    networks:
+      - jupiter_network
+  kafka-jupiter:
     image: wurstmeister/kafka
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka-jupiter
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     ports:
       - "9092:9092"
+    depends_on:
+      - zookeeper
+    networks:
+      - jupiter_network
+  mongo-jupiter:
+    image: mongo
+    restart: always
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-  activemq:
-    image: rmohr/activemq:5.14.3
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
     ports:
-      - "61616:61616"
-      - "8161:8161"
-  redis:
-    image: redis:4.0.11
+      - "27017:27017"
+    networks:
+      - jupiter_network
+  jupiter-service:
+    image: jupiter-service
     ports:
-      - "6379:6379"
-  mysql:
-    image: mysql:5.7
-    environment:
-      MYSQL_DATABASE: sample
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "3306:3306"
+      - "8069:8069"
+      - "6996:6996"
+    networks:
+      - jupiter_network
+    depends_on:
+      - mongo-jupiter
+      - kafka-jupiter
+networks:
+  jupiter_network:
+
+
+
