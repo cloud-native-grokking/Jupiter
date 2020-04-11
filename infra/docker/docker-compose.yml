@@ -27,6 +27,8 @@ services:
       - jupiter_network
   jupiter-service:
     image: jupiter-service
+    environment:
+      ACTIVE_PROFILE: docker
     ports:
       - "8069:8069"
       - "6996:6996"
@@ -37,6 +39,3 @@ services:
       - kafka-jupiter
 networks:
   jupiter_network:
-
-
-
