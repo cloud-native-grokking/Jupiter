@@ -46,4 +46,9 @@
             <appender-ref ref="console"/>
         </root>
     </springProfile>
+    <springProfile name="k8s">
+        <root level="INFO">
+            <appender-ref ref="console"/>
+        </root>
+    </springProfile>
 </configuration>

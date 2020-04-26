@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: jupiter-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: jupiter
+    template:
+        metadata:
+            labels:
+                app: jupiter
+        spec:
+            volumes:
+                - name: config-volume
+                  configMap:
+                    name: jupiter-k8s-profile  
+            containers:
+                - name: jupiter-service
+                  image: thaibao1997/jupiter:1.0.2
+                  command: ["java", "-jar", "jupiter.jar", "--spring.profiles.active=k8s","--spring.config.location=config/"]
+                  ports:
+                    - name: http-port
+                      containerPort: 8069
+                    - name: grpc-port
+                      containerPort: 6996
+                  livenessProbe:
+                    httpGet:
+                      path: /ping
+                      port: http-port
+                    initialDelaySeconds: 15
+                    periodSeconds: 20
+                  readinessProbe:
+                    httpGet:
+                      path: /ping
+                      port: http-port
+                    initialDelaySeconds: 15
+                    periodSeconds: 20 
+                  env:
+                    - name: ACTIVE_PROFILE
+                      value: k8s
+                    - name: MONGODB_ROOT_PASSWORD
+                      valueFrom:
+                        secretKeyRef:
+                          name: jupiter-mongodb
+                          key: mongodb-root-password              
+                  volumeMounts:
+                    - name: config-volume
+                      mountPath: /app/config/

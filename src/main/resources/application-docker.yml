@@ -1,21 +1,39 @@
 server:
   port: 8069
-grpc:
-  port: 6996
+  grpc:
+    port: 6996
+  management:
+    endpoint:
+      metrics:
+        enabled: true
+      health:
+        show-details: ALWAYS
+      prometheus:
+        enabled: true
+    endpoints:
+      web:
+        exposure:
+          include: ["health", "info", "prometheus"]
+    metrics:
+      export:
+        prometheus:
+          enabled: true
 spring:
+  application:
+    name: cloud-navtive-grokking-jupiter
   data:
     mongodb:
       authentication-database: admin
       database: jupiter
       port: 27017
-      host: mongo-jupiter
+      host: jupiter-db-mongodb.default.svc.cluster.local
       username: root
-      password: root
+      password: ${MONGODB_ROOT_PASSWORD}
   kafka:
     listener:
       concurrency: 4
     consumer:
-      bootstrap-servers: kafka-jupiter:9092
+      bootstrap-servers: jupiter-kafka.default.svc.cluster.local:9092
       group-id: default
       auto-offset-reset: earliest
       enable-auto-commit: true

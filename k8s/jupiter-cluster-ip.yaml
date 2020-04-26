@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: jupiter-cluster-ip
+spec:
+    type: ClusterIP
+    selector:
+        app: jupiter
+    ports:
+        - port: 8069
+          targetPort: http-port
+          name: http-port
+        - port: 6996
+          targetPort: grpc-port
+          name: grpc-port

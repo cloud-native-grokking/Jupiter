@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/grpc-backend: "true"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: jupiter-cluster-ip
+              servicePort: http-port
+          # - path: /grpc
+          #   backend:
+          #     serviceName: jupiter-cluster-ip
+          #     servicePort: grpc-port
