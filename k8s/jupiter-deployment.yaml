@@ -6,11 +6,11 @@ spec:
     replicas: 1
     selector:
         matchLabels:
-            app: jupiter
+            app: jupiter-kafka
     template:
         metadata:
             labels:
-                app: jupiter
+                app: jupiter-kafka
         spec:
             volumes:
                 - name: config-volume
@@ -19,7 +19,6 @@ spec:
             containers:
                 - name: jupiter-service
                   image: thaibao1997/jupiter:1.0.2
-                  command: ["java", "-jar", "jupiter.jar", "--spring.profiles.active=k8s","--spring.config.location=config/"]
                   ports:
                     - name: http-port
                       containerPort: 8069
@@ -29,17 +28,19 @@ spec:
                     httpGet:
                       path: /ping
                       port: http-port
-                    initialDelaySeconds: 15
+                    failureThreshold: 1
                     periodSeconds: 20
-                  readinessProbe:
+                  startupProbe:
                     httpGet:
                       path: /ping
                       port: http-port
-                    initialDelaySeconds: 15
-                    periodSeconds: 20 
+                    failureThreshold: 30
+                    periodSeconds: 10   
                   env:
                     - name: ACTIVE_PROFILE
                       value: k8s
+                    - name: CONFIG_LOCATION
+                      value: config/
                     - name: MONGODB_ROOT_PASSWORD
                       valueFrom:
                         secretKeyRef:
