@@ -15,7 +15,7 @@
         <!-- Dependencies version -->
         <springboot.version>2.0.4.RELEASE</springboot.version>
         <springkafka.version>2.1.8.RELEASE</springkafka.version>
-        <protobuf.version>3.7.1</protobuf.version>
+        <protobuf.version>3.16.3</protobuf.version>
         <protobufjavaformat.version>1.4</protobufjavaformat.version>
         <grpc.version>1.22.1</grpc.version>
         <netty.version>4.1.35.Final</netty.version>
